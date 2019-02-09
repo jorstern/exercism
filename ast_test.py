@@ -1,18 +1,19 @@
 
 import ast
 
-def is_valid(filename="hello_world.py"):
-    file = open(filename).read()
-    tree = ast.parse(source=file)
+def is_valid(source, file=True):
+    if file:
+        file = open(source).read()
+        tree = ast.parse(source=file)
+    else:
+        tree = ast.parse(source=source)
 
     for node in ast.walk(tree):
         if isinstance(node, ast.Return):
             try:
                 if node.value.s == "Hello, World!":
                     return True
-                else:
-                    return False
             except:
                 return False
+    return False
 
-print(is_valid())
